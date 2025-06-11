@@ -1,0 +1,20 @@
+mkdir -p extracted_htmls
+
+for zip in *.zip; do
+  base="${zip%.zip}"
+
+  # Extract all index.html files from the zip (at any depth) into a temp folder
+  unzip -o "$zip" -x "__MACOSX/*" -d temp_unzip > /dev/null
+
+  # Find the first index.html in the extracted folder
+  html_file=$(find temp_unzip -type f -name "index.html" | head -n 1)
+
+  if [ -f "$html_file" ]; then
+    cp "$html_file" "extracted_htmls/${base}.html"
+    echo "✔️ Extracted and renamed: ${base}.html"
+  else
+    echo "❌ index.html not found in $zip"
+  fi
+
+  rm -rf temp_unzip  # clean up
+done
