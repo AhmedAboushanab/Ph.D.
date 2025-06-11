@@ -1,0 +1,16 @@
+mkdir -p extracted_htmls  # Create target folder once
+
+for zip in *.zip; do
+  folder="${zip%.zip}"
+  mkdir -p "$folder"
+  unzip -q "$zip" -d "$folder"
+
+  html_file=$(find "$folder" -type f -name "*.html" | head -n 1)
+  if [ -f "$html_file" ]; then
+    new_name="${folder}.html"
+    cp "$html_file" "extracted_htmls/$new_name"
+    echo "✔️ Moved: $new_name → extracted_htmls/"
+  else
+    echo "❌ No HTML file found in $zip"
+  fi
+done
