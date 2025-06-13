@@ -1,0 +1,13 @@
+#a command to move only fasta files into a new folder
+mkdir -p fasta_files && mv *.fasta fasta_files/ 
+
+
+# a command to copy fasta files from multiple folders and paste them into a single folder together
+mkdir -p merged_fastas
+find . -type f -name "*.fasta" -exec cp {} merged_fastas/ \; 
+
+
+# command to concatenate multiple fasta files into a single fasta file
+cat *.fasta > combined.fasta
+
+
